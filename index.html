@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobalXchange - Convertidor de Divisas Profesional</title>
-    
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="background-color" content="#f8fafc">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="GlobalXchange">
+    <link rel="apple-touch-icon" href="./icon.svg">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('./sw.js');
+        });
+      }
+    </script>
     <!-- Chosen Palette: Warm Professional Slate & Indigo (slate-50 background, brand blue/indigo accents, emerald success/totals) -->
     <!-- Application Structure Plan: Designed a unified single-page currency management suite with instant real-time conversion, math expression processing with mobile quick operators, offline caching, fee simulation, category-based expense filtering, inline editing, multi-currency reporting, and CSV export/import capabilities. -->
     <!-- Visualization & Content Choices: Used HTML/Tailwind CSS components and Lucide Unicode icons for UI elements and financial summaries. Custom Canvas icons/graphics where needed. Confirming NO SVG or Mermaid.js used. -->
