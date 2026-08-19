@@ -1,29 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <!-- Gradiente exacto de tu web: azul (#1d4ed8) a índigo (#6366f1) -->
-    <linearGradient id="globalxchange-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1d4ed8" />
-      <stop offset="50%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#6366f1" />
-    </linearGradient>
-
-    <!-- Sombra suave para dar volumen -->
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.25" />
-    </filter>
-  </defs>
-
-  <!-- Fondo redondeado con el gradiente de tu marca -->
-  <rect width="512" height="512" rx="115" fill="url(#globalxchange-grad)" />
-
-  <!-- Flechas bidireccionales de tu logo (arrow-left-right) -->
-  <g filter="url(#shadow)" stroke="#ffffff" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- Flecha superior -->
-    <path d="M 180 130 L 100 210 L 180 290" />
-    <path d="M 100 210 L 412 210" />
-
-    <!-- Flecha inferior -->
-    <path d="M 332 382 L 412 302 L 332 222" />
-    <path d="M 412 302 L 100 302" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2026 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="279.4mm" height="215.9mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 27940 21590"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:white;stroke-width:952.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256}
+    .fil1 {fill:none;fill-rule:nonzero}
+    .fil0 {fill:url(#id0);fill-rule:nonzero}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="7196.67" y1="17568.33" x2="20743.34" y2="4021.66">
+   <stop offset="0" style="stop-opacity:1; stop-color:#1D4ED8"/>
+   <stop offset="0.501961" style="stop-opacity:1; stop-color:#2563EB"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#6366F1"/>
+  </linearGradient>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <path class="fil0" d="M10239.37 4021.67l7461.26 0c1680.16,-0.01 3042.71,1362.54 3042.71,3042.7l-0.01 7461.26c0.01,1680.15 -1362.54,3042.7 -3042.7,3042.7l-7461.26 0c-1680.15,0 -3042.7,-1362.55 -3042.7,-3042.71l0 -7461.25c0,-1680.16 1362.55,-3042.71 3042.71,-3042.71z"/>
+  <g id="_2955504599184" filter="url(#shadow)">
+   <polyline class="fil1 str0" points="11959.17,6531.25 9842.5,8647.92 11959.17,10764.58 "/>
+   <line class="fil1 str0" x1="9842.5" y1="8647.92" x2="18097.5" y2= "8647.92" />
+   <polyline class="fil1 str0" points="15980.83,15237.84 18097.5,13121.17 15980.83,11004.51 "/>
+   <line class="fil1 str0" x1="18097.5" y1="13121.17" x2="9842.5" y2= "13121.17" />
   </g>
+ </g>
 </svg>
