@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Gradiente exacto de tu web: azul (#1d4ed8) a índigo (#6366f1) -->
+    <linearGradient id="globalxchange-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <!-- Sombra suave para dar volumen -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Fondo redondeado con el gradiente de tu marca -->
+  <rect width="512" height="512" rx="115" fill="url(#globalxchange-grad)" />
+
+  <!-- Flechas bidireccionales de tu logo (arrow-left-right) -->
+  <g filter="url(#shadow)" stroke="#ffffff" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Flecha superior -->
+    <path d="M 180 130 L 100 210 L 180 290" />
+    <path d="M 100 210 L 412 210" />
+
+    <!-- Flecha inferior -->
+    <path d="M 332 382 L 412 302 L 332 222" />
+    <path d="M 412 302 L 100 302" />
+  </g>
+</svg>
