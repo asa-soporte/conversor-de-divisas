@@ -4,8 +4,8 @@
   "name": "GlobalXchange - Convertidor de Divisas",
   "short_name": "GlobalXchange",
   "description": "Convertidor de divisas profesional con tasas de cambio en tiempo real y funcionamiento sin conexión.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/conversor-de-divisas/",
+  "scope": "/conversor-de-divisas/",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
