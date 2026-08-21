@@ -22,9 +22,11 @@
         document.documentElement.classList.remove('dark');
       }
 
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('./sw.js');
+          navigator.serviceWorker.register('./sw.js').catch(function(err) {
+            console.warn('ServiceWorker error omitido en este entorno:', err);
+          });
         });
       }
     </script>
@@ -346,6 +348,11 @@
                     <!-- INPUT OCULTO PARA IMPORTAR CSV -->
                     <input type="file" id="importCsvInput" accept=".csv" class="hidden" onchange="handleImportCSV(event)">
 
+                    <button id="shareExpensesBtn" onclick="shareExpensesSummary()" class="flex-1 sm:flex-initial justify-center px-3 py-2 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 active:scale-95">
+                        <i data-lucide="share-2" class="w-3.5 h-3.5 shrink-0"></i>
+                        <span>Compartir</span>
+                    </button>
+
                     <button id="importExpensesBtn" onclick="triggerImportCSV()" class="flex-1 sm:flex-initial justify-center px-3 py-2 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 active:scale-95">
                         <i data-lucide="upload" class="w-3.5 h-3.5 shrink-0"></i>
                         <span>Cargar (CSV)</span>
@@ -519,6 +526,18 @@
     </div>
 
     <!-- Firebase / Firestore SDK Integration for Data Persistence -->
+    <script>
+        window.state = window.state || {
+            rates: { USD: 1.0, CRC: 520.00, CLP: 935.50 },
+            fromCurrency: 'USD',
+            toCurrency: 'CLP',
+            amount: 1000,
+            feePercentage: 2.5,
+            activeModalSelector: null,
+            savedExpenses: [],
+            selectedCategoryFilter: 'Todas'
+        };
+    </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -970,6 +989,85 @@
             });
         }
 
+        function openCurrencyModal(target) {
+            state.activeModalSelector = target;
+            const modal = document.getElementById('currencyModal');
+            const content = document.getElementById('currencyModalContent');
+            const searchInput = document.getElementById('currencySearchInput');
+            
+            if (searchInput) searchInput.value = '';
+            renderCurrencyList('');
+
+            if (modal && content) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                content.classList.remove('translate-y-full', 'sm:scale-95');
+                content.classList.add('translate-y-0', 'sm:scale-100');
+                if (searchInput) setTimeout(() => searchInput.focus(), 100);
+            }
+        }
+
+        function closeCurrencyModal() {
+            const modal = document.getElementById('currencyModal');
+            const content = document.getElementById('currencyModalContent');
+            
+            if (modal && content) {
+                content.classList.remove('translate-y-0', 'sm:scale-100');
+                content.classList.add('translate-y-full', 'sm:scale-95');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function filterCurrencyList(e) {
+            const query = e.target.value || '';
+            renderCurrencyList(query);
+        }
+
+        function renderCurrencyList(query = '') {
+            const container = document.getElementById('currencyListContainer');
+            if (!container) return;
+
+            const q = query.toLowerCase().trim();
+            const filtered = CURRENCIES.filter(c => 
+                c.code.toLowerCase().includes(q) || 
+                c.name.toLowerCase().includes(q) || 
+                c.region.toLowerCase().includes(q)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No se encontraron divisas</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(c => `
+                <button type="button" onclick="selectCurrencyFromModal('${c.code}')" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-left group">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">${c.flag}</span>
+                        <div>
+                            <div class="font-bold text-sm text-slate-900 dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400">${c.code} - ${c.name}</div>
+                            <div class="text-xs text-slate-400 dark:text-slate-500">${c.region}</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-400 dark:text-slate-500">${c.symbol}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectCurrencyFromModal(code) {
+            if (state.activeModalSelector === 'from') {
+                if (code === state.toCurrency) {
+                    state.toCurrency = state.fromCurrency;
+                }
+                state.fromCurrency = code;
+            } else if (state.activeModalSelector === 'to') {
+                if (code === state.fromCurrency) {
+                    state.fromCurrency = state.toCurrency;
+                }
+                state.toCurrency = code;
+            }
+            closeCurrencyModal();
+            updateUI();
+        }
+
         function renderCategoryFilters() {
             const container = document.getElementById('categoryFilterContainer');
             if (!container) return;
@@ -1264,6 +1362,9 @@
                         
                         <!-- Botones de Acción en Móvil -->
                         <div class="flex items-center gap-1 lg:hidden shrink-0">
+                            <button onclick="shareSingleExpense(${item.id})" title="Compartir gasto" class="p-2 text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/50 transition-colors">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </button>
                             <button onclick="openEditModal(${item.id})" title="Editar gasto" class="p-2 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950/50 transition-colors">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </button>
@@ -1291,6 +1392,9 @@
 
                         <!-- Botones de Acción en Escritorio -->
                         <div class="hidden lg:flex items-center gap-1 shrink-0">
+                            <button onclick="shareSingleExpense(${item.id})" title="Compartir gasto" class="p-2 text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/50 transition-colors">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </button>
                             <button onclick="openEditModal(${item.id})" title="Editar gasto" class="p-2 text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950/50 transition-colors">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </button>
@@ -1303,83 +1407,121 @@
             `;
             }).join('');
 
-            const totalCRC = document.getElementById('totalCRC');
-            const totalUSD = document.getElementById('totalUSD');
-            const totalCLP = document.getElementById('totalCLP');
-
-            if (totalCRC) totalCRC.textContent = `₡ ${formatNumber(sumCRC, 0)}`;
-            if (totalUSD) totalUSD.textContent = `$ ${formatNumber(sumUSD, 2)}`;
-            if (totalCLP) totalCLP.textContent = `$ ${formatNumber(sumCLP, 0)}`;
+            document.getElementById('totalCRC').textContent = `₡ ${formatNumber(sumCRC, 0)}`;
+            document.getElementById('totalUSD').textContent = `$ ${formatNumber(sumUSD, 2)}`;
+            document.getElementById('totalCLP').textContent = `$ ${formatNumber(sumCLP, 0)}`;
 
             initLucideIcons();
         }
 
-        function openCurrencyModal(targetSelector) {
-            state.activeModalSelector = targetSelector;
-            const modal = document.getElementById('currencyModal');
-            const content = document.getElementById('currencyModalContent');
-            
-            renderCurrencyList(CURRENCIES);
-            
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            content.classList.remove('translate-y-full', 'sm:scale-95');
-            content.classList.add('translate-y-0', 'sm:scale-100');
-            
-            setTimeout(() => document.getElementById('currencySearchInput').focus(), 100);
+        function copyTextToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToastNotification('Copiado al portapapeles', 'success');
+            } catch (err) {
+                showToastNotification('No se pudo copiar el texto', 'warning');
+            }
+            document.body.removeChild(textArea);
         }
 
-        function closeCurrencyModal() {
-            const modal = document.getElementById('currencyModal');
-            const content = document.getElementById('currencyModalContent');
-            
-            content.classList.remove('translate-y-0', 'sm:scale-100');
-            content.classList.add('translate-y-full', 'sm:scale-95');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            
-            document.getElementById('currencySearchInput').value = '';
-        }
-
-        function renderCurrencyList(list) {
-            const container = document.getElementById('currencyListContainer');
-            if (list.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-slate-400 dark:text-slate-500 py-6">No se encontraron divisas coincidentes.</p>`;
+        function shareExpensesSummary() {
+            if (!state.savedExpenses || state.savedExpenses.length === 0) {
+                showToastNotification('No hay gastos registrados para compartir.', 'warning');
                 return;
             }
 
-            container.innerHTML = list.map(c => `
-                <div onclick="selectCurrencyFromModal('${c.code}')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors">
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">${c.flag}</span>
-                        <div>
-                            <span class="font-bold text-sm text-slate-900 dark:text-slate-100">${c.code}</span>
-                            <span class="text-xs text-slate-400 dark:text-slate-500 block">${c.name}</span>
-                        </div>
-                    </div>
-                    <span class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">${c.region}</span>
-                </div>
-            `).join('');
-        }
+            const exportList = state.savedExpenses.filter(item => {
+                if (state.selectedCategoryFilter === 'Todas') return true;
+                return item.category === state.selectedCategoryFilter;
+            });
 
-        function filterCurrencyList(e) {
-            const query = e.target.value.toLowerCase().trim();
-            const filtered = CURRENCIES.filter(c => 
-                c.code.toLowerCase().includes(query) || 
-                c.name.toLowerCase().includes(query) ||
-                c.region.toLowerCase().includes(query)
-            );
-            renderCurrencyList(filtered);
-        }
-
-        function selectCurrencyFromModal(code) {
-            if (state.activeModalSelector === 'from') {
-                if (code === state.toCurrency) state.toCurrency = state.fromCurrency;
-                state.fromCurrency = code;
-            } else {
-                if (code === state.fromCurrency) state.fromCurrency = state.toCurrency;
-                state.toCurrency = code;
+            if (exportList.length === 0) {
+                showToastNotification('No hay gastos en la categoría seleccionada.', 'warning');
+                return;
             }
-            closeCurrencyModal();
-            updateUI();
+
+            let sumUSD = 0, sumCRC = 0, sumCLP = 0;
+            const itemsFormatted = exportList.map(item => {
+                const usdVal = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
+                const crcVal = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
+                const clpVal = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
+                sumUSD += usdVal;
+                sumCRC += crcVal;
+                sumCLP += clpVal;
+
+                return `• ${item.category} | ${item.note}: ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode} (₡${formatNumber(crcVal, 0)} | $${formatNumber(usdVal, 2)} USD | $${formatNumber(clpVal, 0)} CLP)`;
+            });
+
+            const summaryHeader = state.selectedCategoryFilter === 'Todas' ? 'Resumen General de Gastos' : `Gastos en ${state.selectedCategoryFilter}`;
+
+            const textToShare = `📊 GlobalXchange - ${summaryHeader}\n` +
+                `-----------------------------------------\n` +
+                `💰 TOTALES ACUMULADOS:\n` +
+                `🇨🇷 CRC: ₡${formatNumber(sumCRC, 0)}\n` +
+                `🇺🇸 USD: $${formatNumber(sumUSD, 2)}\n` +
+                `🇨🇱 CLP: $${formatNumber(sumCLP, 0)}\n\n` +
+                `📋 DETALLE DE GASTOS (${exportList.length} ítems):\n` +
+                itemsFormatted.join('\n') +
+                `\n\n_Enviado desde GlobalXchange_`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Resumen de Gastos GlobalXchange',
+                    text: textToShare
+                }).then(() => {
+                    showToastNotification('Resumen compartido con éxito', 'success');
+                }).catch((err) => {
+                    if (err.name !== 'AbortError') {
+                        copyTextToClipboard(textToShare);
+                    }
+                });
+            } else {
+                copyTextToClipboard(textToShare);
+            }
+        }
+
+        function shareSingleExpense(id) {
+            const item = state.savedExpenses.find(i => String(i.id) === String(id));
+            if (!item) return;
+
+            const usdVal = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
+            const crcVal = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
+            const clpVal = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
+
+            const textToShare = `💸 GlobalXchange - Detalle de Gasto\n` +
+                `-----------------------------------------\n` +
+                `📌 Categoría: ${item.category}\n` +
+                `📝 Descripción: ${item.note}\n` +
+                `💵 Monto Ingresado: ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode}\n` +
+                `🗓️ Fecha: ${item.date}\n\n` +
+                `🔄 Equivalencias:\n` +
+                `• 🇨🇷 CRC: ₡${formatNumber(crcVal, 0)}\n` +
+                `• 🇺🇸 USD: $${formatNumber(usdVal, 2)}\n` +
+                `• 🇨🇱 CLP: $${formatNumber(clpVal, 0)}\n\n` +
+                `_Enviado desde GlobalXchange_`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: `Gasto: ${item.note}`,
+                    text: textToShare
+                }).then(() => {
+                    showToastNotification('Gasto compartido', 'success');
+                }).catch((err) => {
+                    if (err.name !== 'AbortError') {
+                        copyTextToClipboard(textToShare);
+                    }
+                });
+            } else {
+                copyTextToClipboard(textToShare);
+            }
         }
 
         function exportExpensesCSV() {
@@ -1582,9 +1724,15 @@
         window.closeEditModal = closeEditModal;
         window.saveEditedExpense = saveEditedExpense;
         window.clearAllExpenses = clearAllExpenses;
+        window.shareExpensesSummary = shareExpensesSummary;
+        window.shareSingleExpense = shareSingleExpense;
         window.exportExpensesCSV = exportExpensesCSV;
         window.triggerImportCSV = triggerImportCSV;
         window.handleImportCSV = handleImportCSV;
+        window.openCurrencyModal = openCurrencyModal;
+        window.closeCurrencyModal = closeCurrencyModal;
+        window.filterCurrencyList = filterCurrencyList;
+        window.renderCurrencyList = renderCurrencyList;
         window.selectCurrencyFromModal = selectCurrencyFromModal;
         window.renderSavedExpenses = renderSavedExpenses;
         window.setCategoryFilter = setCategoryFilter;
