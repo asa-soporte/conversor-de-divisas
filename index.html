@@ -159,7 +159,6 @@
                     </div>
                 </div>
 
-                <!-- GRID DE CONVERSIÓN -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center">
                     
                     <!-- MONEDA ORIGEN -->
@@ -173,7 +172,7 @@
                         </div>
                         <div class="flex items-center gap-2 sm:gap-3">
                             <div class="relative flex-grow">
-                                <input type="text" id="amountInput" value="100" inputmode="decimal" class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600" placeholder="Ej. 100 ó 15+4.50">
+                                <input type="text" id="amountInput" value="1" inputmode="decimal" class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600" placeholder="Ej. 1 ó 15+4.50">
                                 <div id="mathResultPreview" class="text-[11px] font-semibold text-brand-600 dark:text-brand-400 hidden mt-0.5">
                                     Valor: <span id="mathResultValue">0</span>
                                 </div>
@@ -217,7 +216,6 @@
                         </button>
                     </div>
 
-                    <!-- MONEDA DESTINO -->
                     <div class="lg:col-span-5 bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:border-brand-300 dark:hover:border-brand-500 transition-all">
                         <div class="flex justify-between items-center mb-1.5 sm:mb-2">
                             <label for="convertedResult" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Monto Destino (Editable)</label>
@@ -303,7 +301,6 @@
                     </div>
                 </div>
 
-                <!-- CALCULADORA DE COMISIONES -->
                 <div id="feesPanel" class="hidden mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-800/40 p-3.5 sm:p-4 rounded-2xl">
                     <div class="flex items-center justify-between mb-3 sm:mb-4">
                         <h3 class="text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-900 dark:text-white">
@@ -386,7 +383,6 @@
                 <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryFilterContainer"></div>
             </div>
 
-            <!-- RESUMEN ACUMULADO -->
             <div id="expensesSummaryBar" class="mb-4 sm:mb-6 p-3 sm:p-4 bg-slate-100/70 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 hidden">
                 <div class="flex justify-between items-center mb-2">
                     <span id="summaryTitleText" class="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Acumulado</span>
@@ -416,7 +412,6 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-5 text-xs text-slate-500 dark:text-slate-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
             <div class="flex items-center gap-2">
@@ -430,7 +425,6 @@
         </div>
     </footer>
 
-    <!-- MODAL SELECCIÓN DIVISA -->
     <div id="currencyModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200">
         <div class="bg-white dark:bg-slate-800 w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-200 max-h-[85vh] flex flex-col" id="currencyModalContent">
             <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between shrink-0">
@@ -454,7 +448,6 @@
         </div>
     </div>
 
-    <!-- MODAL EDICIÓN GASTO -->
     <div id="editExpenseModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200">
         <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transform scale-95 transition-transform duration-200 p-5 sm:p-6 space-y-4" id="editExpenseModalContent">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -487,10 +480,6 @@
                     <select id="editExpenseCode" class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl p-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-brand-500">
                         <option value="USD">🇺🇸 USD (Dólar)</option>
                         <option value="CLP">🇨🇱 CLP (Peso Chileno)</option>
-                        <option value="EUR">🇪🇺 EUR (Euro)</option>
-                        <option value="GBP">🇬🇧 GBP (Libra)</option>
-                        <option value="ARS">🇦🇷 ARS (Peso Argentino)</option>
-                        <option value="BRL">🇧🇷 BRL (Real)</option>
                     </select>
                 </div>
 
@@ -534,40 +523,15 @@
         const CACHE_RATES_KEY = 'globalxchange_rates_v3';
         const STORAGE_KEY = 'globalxchange_expenses_v3';
 
+        // Solo USD y CLP
         const FALLBACK_RATES_USD = {
             USD: 1,
-            CLP: 925,
-            EUR: 0.92,
-            GBP: 0.79,
-            ARS: 950,
-            BRL: 5.5,
-            MXN: 19.5,
-            COP: 4000,
-            PEN: 3.75,
-            UYU: 40,
-            CAD: 1.36,
-            AUD: 1.50,
-            JPY: 145,
-            CNY: 7.15,
-            CHF: 0.85
+            CLP: 925
         };
 
         const CURRENCIES = [
             { code: 'USD', name: 'Dólar Estadounidense', symbol: '$', region: 'EE.UU.' },
-            { code: 'CLP', name: 'Peso Chileno', symbol: '$', region: 'Chile' },
-            { code: 'EUR', name: 'Euro', symbol: '€', region: 'Eurozona' },
-            { code: 'GBP', name: 'Libra Esterlina', symbol: '£', region: 'Reino Unido' },
-            { code: 'ARS', name: 'Peso Argentino', symbol: '$', region: 'Argentina' },
-            { code: 'BRL', name: 'Real Brasileño', symbol: 'R$', region: 'Brasil' },
-            { code: 'MXN', name: 'Peso Mexicano', symbol: '$', region: 'México' },
-            { code: 'COP', name: 'Peso Colombiano', symbol: '$', region: 'Colombia' },
-            { code: 'PEN', name: 'Sol Peruano', symbol: 'S/', region: 'Perú' },
-            { code: 'UYU', name: 'Peso Uruguayo', symbol: '$', region: 'Uruguay' },
-            { code: 'CAD', name: 'Dólar Canadiense', symbol: 'CA$', region: 'Canadá' },
-            { code: 'AUD', name: 'Dólar Australiano', symbol: 'A$', region: 'Australia' },
-            { code: 'JPY', name: 'Yen Japonés', symbol: '¥', region: 'Japón' },
-            { code: 'CNY', name: 'Yuan Chino', symbol: '¥', region: 'China' },
-            { code: 'CHF', name: 'Franco Suizo', symbol: 'CHF', region: 'Suiza' }
+            { code: 'CLP', name: 'Peso Chileno', symbol: '$', region: 'Chile' }
         ];
 
         const CATEGORIES = [
@@ -581,15 +545,14 @@
         ];
 
         const COUNTRY_FLAGS = {
-            USD: 'us', CLP: 'cl', EUR: 'eu', GBP: 'gb', ARS: 'ar',
-            BRL: 'br', MXN: 'mx', COP: 'co', PEN: 'pe', UYU: 'uy',
-            CAD: 'ca', AUD: 'au', JPY: 'jp', CNY: 'cn', CHF: 'ch'
+            USD: 'us',
+            CLP: 'cl'
         };
 
         const state = {
             fromCurrency: 'USD',
             toCurrency: 'CLP',
-            amount: 100,
+            amount: 1,
             rates: { ...FALLBACK_RATES_USD },
             feePercentage: 0,
             savedExpenses: [],
@@ -681,12 +644,9 @@
             }
         }
 
-        // Sanitizador de entrada: Impide escribir texto arbitrario no numérico ni matemático
         function sanitizeAmountInput(e) {
             const input = e.target;
-            // Reemplaza caracteres visuales de multiplicación y división por operadores estándar
             let clean = input.value.replace(/x|X/g, '*').replace(/÷/g, '/');
-            // Elimina cualquier carácter que NO sea número, +, -, *, /, ., ,, (, ), o espacio
             clean = clean.replace(/[^0-9+\-*/.,()\s]/g, '');
             if (input.value !== clean) {
                 input.value = clean;
@@ -748,7 +708,8 @@
                 if (resGlobal.ok) {
                     const data = await resGlobal.json();
                     if (data && data.rates) {
-                        fetchedRates = { ...fetchedRates, ...data.rates };
+                        if (data.rates.CLP) fetchedRates['CLP'] = data.rates.CLP;
+                        if (data.rates.USD) fetchedRates['USD'] = data.rates.USD;
                         ratesLoaded = true;
                     }
                 }
@@ -762,7 +723,8 @@
                     if (resAlt.ok) {
                         const dataAlt = await resAlt.json();
                         if (dataAlt && dataAlt.rates) {
-                            fetchedRates = { ...fetchedRates, ...dataAlt.rates };
+                            if (dataAlt.rates.CLP) fetchedRates['CLP'] = dataAlt.rates.CLP;
+                            if (dataAlt.rates.USD) fetchedRates['USD'] = dataAlt.rates.USD;
                             ratesLoaded = true;
                         }
                     }
@@ -919,6 +881,19 @@
                 const temp = state.fromCurrency;
                 state.fromCurrency = state.toCurrency;
                 state.toCurrency = temp;
+                
+                // Resetear valor interno y limpiar entradas
+                state.amount = 0;
+                const amountInput = document.getElementById('amountInput');
+                const convertedInput = document.getElementById('convertedResult');
+                const mathPreview = document.getElementById('mathResultPreview');
+                const targetMathPreview = document.getElementById('targetMathResultPreview');
+
+                if (amountInput) amountInput.value = '';
+                if (convertedInput) convertedInput.value = '0,00';
+                if (mathPreview) mathPreview.classList.add('hidden');
+                if (targetMathPreview) targetMathPreview.classList.add('hidden');
+
                 updateUI();
             });
 
@@ -1265,7 +1240,7 @@
                             <button onclick="openEditModal(${item.id})" title="Editar gasto" class="p-2 text-slate-500 hover:text-brand-600 dark:hover:text-brand-400 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950/50 transition-colors">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </button>
-                            <button onclick="deleteExpense(${item.id})" title="Eliminar registro" class="p-2 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors">
+                            <button onclick="deleteExpense(${item.id})" title="Eliminar registro" class="p-2 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-950/50 transition-colors">
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
@@ -1555,14 +1530,15 @@
                             const code = cols[5];
 
                             if (!isNaN(amt) && amt > 0) {
-                                const fromObj = CURRENCIES.find(c => c.code === code) || CURRENCIES[0];
+                                const validCode = (code === 'CLP' || code === 'USD') ? code : 'USD';
+                                const fromObj = CURRENCIES.find(c => c.code === validCode) || CURRENCIES[0];
                                 state.savedExpenses.push({
                                     id: Date.now() + i,
                                     timestamp: Date.now(),
                                     category: catStr || '💡 Otro Gasto',
                                     note: noteStr || 'Gasto importado',
                                     fromAmount: amt,
-                                    fromCode: code || 'USD',
+                                    fromCode: validCode,
                                     fromSymbol: fromObj.symbol,
                                     date: dateStr || new Date().toLocaleDateString()
                                 });
