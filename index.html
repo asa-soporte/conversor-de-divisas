@@ -675,7 +675,7 @@
                 // Actualizar UI del estado de conexión[cite: 1]
                 if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'; //[cite: 1]
                 if (statusIndicator) statusIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse'; //[cite: 1]
-                if (statusText) statusText.textContent = 'Mercado En Vivo (Banco Central & Global)'; //[cite: 1]
+                if (statusText) statusText.textContent = 'Mercado En Vivo'; //[cite: 1]
                 
                 const lastUpdatedEl = document.getElementById('lastUpdatedTime');
                 if (lastUpdatedEl) lastUpdatedEl.textContent = `Hoy, ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`; //[cite: 1]
