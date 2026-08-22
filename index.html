@@ -14,7 +14,6 @@
     <link rel="apple-touch-icon" href="./icon.svg">
     <link rel="icon" type="image/svg+xml" href="./icon.svg">
 
-    <!-- Script Modo Oscuro Anti-FOUC -->
     <script>
       (function() {
         const savedTheme = localStorage.getItem('globalxchange_theme');
@@ -34,7 +33,6 @@
       }
     </script>
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -59,12 +57,10 @@
         }
     </script>
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts & Lucide Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -110,11 +106,11 @@
                     </div>
                     <div>
                         <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-brand-600 via-indigo-600 to-indigo-500 bg-clip-text text-transparent">GlobalXchange</span>
-                        <span class="hidden sm:inline-block ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800">v3.3</span>
+                        <span class="hidden sm:inline-block ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800">v3.5</span>
                     </div>
                 </div>
 
-                <!-- Botón de Modo Oscuro y Estado de API -->
+                <!-- Dark Mode & Status Badge -->
                 <div class="flex items-center gap-2 sm:gap-4">
                     <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Cambiar tema">
                         <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
@@ -130,10 +126,9 @@
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
 
-        <!-- AVISO DE MODO OFFLINE -->
+        <!-- OFFLINE BANNER -->
         <div id="offlineBanner" class="hidden bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 px-4 py-3 rounded-2xl flex items-center justify-between shadow-sm">
             <div class="flex items-center gap-2.5 text-xs sm:text-sm font-semibold">
                 <i data-lucide="wifi-off" class="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0"></i>
@@ -144,7 +139,6 @@
             </button>
         </div>
 
-        <!-- TARJETA PRINCIPAL DE CONVERSIÓN -->
         <section class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl glow-effect relative overflow-hidden">
             <div class="absolute -right-20 -top-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -left-20 -bottom-20 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -154,49 +148,56 @@
                     <div>
                         <h1 class="text-xl sm:text-3xl font-extrabold tracking-tight">Conversión Inteligente</h1>
                         <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-0.5 sm:mt-1">
-                            Ingresa un monto o combina sumas, restas y divisiones (ej. <code class="bg-slate-100 dark:bg-slate-800 text-brand-600 dark:text-brand-400 px-1 py-0.5 rounded font-mono">15 + 4.50</code>)
+                            Ingresa un monto o combina operaciones matemáticas (ej. <code class="bg-slate-100 dark:bg-slate-800 text-brand-600 dark:text-brand-400 px-1 py-0.5 rounded font-mono">15 + 4.50</code>)
                         </p>
                     </div>
 
-                    <!-- Pestañas de funcionalidad -->
+                    <!-- Tabs -->
                     <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 self-start md:self-auto w-full sm:w-auto justify-between sm:justify-start">
                         <button id="tabConvert" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm rounded-xl">Convertir</button>
                         <button id="tabFees" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all rounded-xl">Comisiones / Viajes</button>
                     </div>
                 </div>
 
-                <!-- GRID DE CONVERSIÓN EN TIEMPO REAL -->
+                <!-- GRID DE CONVERSIÓN -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center">
                     
                     <!-- MONEDA ORIGEN -->
                     <div class="lg:col-span-5 bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:border-brand-300 dark:hover:border-brand-500 transition-all">
                         <div class="flex justify-between items-center mb-1.5 sm:mb-2">
-                            <label for="amountInput" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Monto</label>
-                            <span id="sourceSymbol" class="text-xs font-semibold text-brand-600 dark:text-brand-400">$ USD</span>
+                            <label for="amountInput" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Monto Origen</label>
+                            <span id="sourceSymbol" class="text-xs font-semibold text-brand-600 dark:text-brand-400 flex items-center gap-1.5">
+                                <img src="https://flagcdn.com/w40/us.png" srcset="https://flagcdn.com/w80/us.png 2x" class="w-4 h-3 rounded-sm object-cover shrink-0" alt="US">
+                                <span>$ USD</span>
+                            </span>
                         </div>
                         <div class="flex items-center gap-2 sm:gap-3">
                             <div class="relative flex-grow">
-                                <input type="text" id="amountInput" value="1000" inputmode="decimal" class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600" placeholder="0.00 ó 15+4.50">
+                                <input type="text" id="amountInput" value="100" inputmode="decimal" class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600" placeholder="Ej. 100 ó 15+4.50">
                                 <div id="mathResultPreview" class="text-[11px] font-semibold text-brand-600 dark:text-brand-400 hidden mt-0.5">
-                                    Calculado: <span id="mathResultValue">0</span>
+                                    Valor: <span id="mathResultValue">0</span>
                                 </div>
                             </div>
                             
                             <!-- Selector Origen -->
-                            <div class="relative shrink-0 min-w-[120px] sm:min-w-[140px]">
-                                <button id="fromCurrencyBtn" type="button" class="w-full flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl font-semibold text-xs sm:text-sm transition-colors border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:scale-95">
-                                    <div class="flex items-center gap-1.5 sm:gap-2 truncate">
-                                        <span id="fromFlag" class="text-lg sm:text-xl">🇺🇸</span>
-                                        <span id="fromCode" class="font-bold">USD</span>
+                            <div class="relative shrink-0 min-w-[130px] sm:min-w-[155px]">
+                                <button id="fromCurrencyBtn" type="button" class="w-full flex items-center justify-between gap-2 px-3 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl font-semibold text-xs sm:text-sm transition-all border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:scale-95 shadow-sm">
+                                    <div class="flex items-center gap-2 truncate">
+                                        <span id="fromFlag" class="p-1 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200/60 dark:border-slate-600/60 shrink-0 flex items-center justify-center">
+                                            <img src="https://flagcdn.com/w40/us.png" srcset="https://flagcdn.com/w80/us.png 2x" class="w-6 h-4 rounded object-cover" alt="US">
+                                        </span>
+                                        <span id="fromCode" class="font-extrabold text-sm sm:text-base tracking-wide">USD</span>
                                     </div>
                                     <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- BARRA DE ACCESO RÁPIDO A OPERADORES MATEMÁTICOS PARA MÓVILES -->
+                        <!-- BARRA OPERACIONES MATEMÁTICAS -->
                         <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/60 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                            <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mr-1 shrink-0">Operaciones:</span>
+                            <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mr-1 shrink-0">Acciones:</span>
+                            <button type="button" onclick="clearInput('amountInput')" class="px-2.5 py-1 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900 rounded-lg text-xs font-bold border border-rose-200 dark:border-rose-800 transition-colors active:scale-95 shrink-0">C Limpiar</button>
+                            <button type="button" onclick="backspaceInput('amountInput')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold border border-slate-200 dark:border-slate-600 transition-colors active:scale-95 shrink-0">⌫</button>
                             <button type="button" onclick="appendMathOperator('+')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-brand-100 dark:hover:bg-brand-900/50 hover:text-brand-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold border border-slate-200 dark:border-slate-600 transition-colors active:scale-95 shrink-0">+ Suma</button>
                             <button type="button" onclick="appendMathOperator('-')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-brand-100 dark:hover:bg-brand-900/50 hover:text-brand-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold border border-slate-200 dark:border-slate-600 transition-colors active:scale-95 shrink-0">- Resta</button>
                             <button type="button" onclick="appendMathOperator('*')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-brand-100 dark:hover:bg-brand-900/50 hover:text-brand-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold border border-slate-200 dark:border-slate-600 transition-colors active:scale-95 shrink-0">× Mult</button>
@@ -209,7 +210,7 @@
                         </div>
                     </div>
 
-                    <!-- BOTÓN INTERCAMBIAR (SWAP) -->
+                    <!-- BOTÓN SWAP -->
                     <div class="lg:col-span-2 flex justify-center py-1 lg:py-0">
                         <button id="swapCurrenciesBtn" title="Invertir divisas" class="swap-btn p-3 sm:p-3.5 bg-brand-600 hover:bg-brand-700 text-white rounded-2xl shadow-lg hover:shadow-brand-500/25 active:scale-95 transition-all">
                             <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
@@ -219,36 +220,51 @@
                     <!-- MONEDA DESTINO -->
                     <div class="lg:col-span-5 bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:border-brand-300 dark:hover:border-brand-500 transition-all">
                         <div class="flex justify-between items-center mb-1.5 sm:mb-2">
-                            <label for="convertedResult" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Monto Calculado</label>
-                            <span id="targetSymbol" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">$ CLP</span>
+                            <label for="convertedResult" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Monto Destino (Editable)</label>
+                            <span id="targetSymbol" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                                <img src="https://flagcdn.com/w40/cl.png" srcset="https://flagcdn.com/w80/cl.png 2x" class="w-4 h-3 rounded-sm object-cover shrink-0" alt="CL">
+                                <span>$ CLP</span>
+                            </span>
                         </div>
                         <div class="flex items-center gap-2 sm:gap-3">
-                            <input type="text" id="convertedResult" readonly class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-brand-600 dark:text-brand-400 cursor-text" value="0.00">
+                            <div class="relative flex-grow">
+                                <input type="text" id="convertedResult" inputmode="decimal" class="w-full min-w-0 bg-transparent text-2xl sm:text-3xl font-bold focus:outline-none tracking-tight text-emerald-600 dark:text-emerald-400 placeholder-emerald-300 dark:placeholder-emerald-700" value="0.00" placeholder="0.00">
+                                <div id="targetMathResultPreview" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hidden mt-0.5">
+                                    Valor: <span id="targetMathResultValue">0</span>
+                                </div>
+                            </div>
                             
                             <!-- Selector Destino -->
-                            <div class="relative shrink-0 min-w-[120px] sm:min-w-[140px]">
-                                <button id="toCurrencyBtn" type="button" class="w-full flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl font-semibold text-xs sm:text-sm transition-colors border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:scale-95">
-                                    <div class="flex items-center gap-1.5 sm:gap-2 truncate">
-                                        <span id="toFlag" class="text-lg sm:text-xl">🇨🇱</span>
-                                        <span id="toCode" class="font-bold">CLP</span>
+                            <div class="relative shrink-0 min-w-[130px] sm:min-w-[155px]">
+                                <button id="toCurrencyBtn" type="button" class="w-full flex items-center justify-between gap-2 px-3 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl font-semibold text-xs sm:text-sm transition-all border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:scale-95 shadow-sm">
+                                    <div class="flex items-center gap-2 truncate">
+                                        <span id="toFlag" class="p-1 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200/60 dark:border-slate-600/60 shrink-0 flex items-center justify-center">
+                                            <img src="https://flagcdn.com/w40/cl.png" srcset="https://flagcdn.com/w80/cl.png 2x" class="w-6 h-4 rounded object-cover" alt="CL">
+                                        </span>
+                                        <span id="toCode" class="font-extrabold text-sm sm:text-base tracking-wide">CLP</span>
                                     </div>
                                     <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0"></i>
                                 </button>
                             </div>
                         </div>
+
+                        <!-- BARRA OPERACIONES DESTINO -->
+                        <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/60 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                            <button type="button" onclick="clearInput('convertedResult')" class="px-2.5 py-1 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 hover:bg-rose-200 rounded-lg text-xs font-bold border border-rose-200 dark:border-rose-800 transition-colors shrink-0">C Limpiar</button>
+                            <button type="button" onclick="backspaceInput('convertedResult')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold border border-slate-200 dark:border-slate-600 shrink-0">⌫</button>
+                        </div>
                     </div>
 
                 </div>
 
-                <!-- RESUMEN DE TASA Y FECHA -->
                 <div class="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-slate-200/60 dark:border-slate-700/60 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 sm:gap-3">
                     <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
                         <div class="p-1.5 rounded-lg bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 shrink-0">
                             <i data-lucide="trending-up" class="w-4 h-4"></i>
                         </div>
                         <span class="text-slate-600 dark:text-slate-400 font-medium">Tasa:</span>
-                        <span id="exchangeRateText" class="font-bold text-slate-900 dark:text-white">1 USD = 935.50 CLP</span>
-                        <span id="rateInverseText" class="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 ml-0.5 sm:ml-1">(1 CLP = 0.0010 USD)</span>
+                        <span id="exchangeRateText" class="font-bold text-slate-900 dark:text-white flex items-center gap-1">1 USD = 925.00 CLP</span>
+                        <span id="rateInverseText" class="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 ml-0.5 sm:ml-1">(1 CLP = 0.0011 USD)</span>
                     </div>
 
                     <div class="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
@@ -257,7 +273,7 @@
                     </div>
                 </div>
 
-                <!-- PANEL RÁPIDO PARA GUARDAR GASTO -->
+                <!-- PANEL PARA GUARDAR GASTO -->
                 <div class="mt-4 sm:mt-5 pt-4 sm:pt-5 border-t border-slate-200/60 dark:border-slate-700/60">
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50/80 dark:bg-slate-800/50 p-3 sm:p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
                         <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
@@ -273,7 +289,7 @@
                                     <option value="💡 Otro Gasto">💡 Otro Gasto</option>
                                 </select>
                             </div>
-                            <!-- Nota opcional -->
+                            <!-- Nota -->
                             <div>
                                 <label for="expenseNote" class="block text-[10px] sm:text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase mb-1">Nota (Opcional)</label>
                                 <input type="text" id="expenseNote" placeholder="Ej. Almuerzo, taxi aeropuerto..." class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs p-2.5 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-brand-500">
@@ -324,7 +340,6 @@
             </div>
         </section>
 
-        <!-- SECCIÓN: REGISTRO DE GASTOS -->
         <section class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-md border border-slate-200 dark:border-slate-800">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div>
@@ -337,7 +352,7 @@
                             <i data-lucide="database" class="w-3 h-3"></i> Guardado Local
                         </span>
                     </div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Control de gastos filtrable, exportable y compartible en CRC, USD y CLP</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Control de gastos filtrable, exportable y compartible</p>
                 </div>
 
                 <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
@@ -365,7 +380,7 @@
                 </div>
             </div>
 
-            <!-- FILTRO POR CATEGORÍAS -->
+            <!-- FILTRO CATEGORÍAS -->
             <div class="mb-4 sm:mb-5">
                 <span class="text-[10px] sm:text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-2">Filtrar por Categoría:</span>
                 <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryFilterContainer"></div>
@@ -377,24 +392,17 @@
                     <span id="summaryTitleText" class="text-[11px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Acumulado</span>
                     <span id="filteredCountText" class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">0 ítems</span>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                     <div class="bg-white dark:bg-slate-800 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="text-base sm:text-lg">🇨🇷</span>
-                            <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Colón (CRC)</span>
-                        </div>
-                        <span id="totalCRC" class="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">₡ 0</span>
-                    </div>
-                    <div class="bg-white dark:bg-slate-800 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base sm:text-lg">🇺🇸</span>
+                            <img src="https://flagcdn.com/w40/us.png" class="w-5 h-3.5 rounded-sm object-cover" alt="US">
                             <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Dólar (USD)</span>
                         </div>
                         <span id="totalUSD" class="text-xs sm:text-sm font-extrabold text-brand-600 dark:text-brand-400">$ 0.00</span>
                     </div>
                     <div class="bg-white dark:bg-slate-800 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="text-base sm:text-lg">🇨🇱</span>
+                            <img src="https://flagcdn.com/w40/cl.png" class="w-5 h-3.5 rounded-sm object-cover" alt="CL">
                             <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Peso (CLP)</span>
                         </div>
                         <span id="totalCLP" class="text-xs sm:text-sm font-extrabold text-emerald-600 dark:text-emerald-400">$ 0</span>
@@ -402,7 +410,7 @@
                 </div>
             </div>
 
-            <!-- LISTA DE GASTOS GUARDADOS -->
+            <!-- LISTA DE GASTOS -->
             <div id="savedExpensesContainer" class="space-y-3"></div>
         </section>
 
@@ -438,11 +446,11 @@
             <div class="p-3 sm:p-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 shrink-0">
                 <div class="relative">
                     <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400"></i>
-                    <input type="text" id="currencySearchInput" placeholder="Buscar divisa (USD, CRC, CLP)..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white">
+                    <input type="text" id="currencySearchInput" placeholder="Buscar divisa (USD, CLP)..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white">
                 </div>
             </div>
 
-            <div class="max-h-[300px] overflow-y-auto p-2 space-y-1" id="currencyListContainer"></div>
+            <div class="max-h-[350px] overflow-y-auto p-2 space-y-1" id="currencyListContainer"></div>
         </div>
     </div>
 
@@ -462,7 +470,7 @@
             <input type="hidden" id="editExpenseId">
 
             <div>
-                <label for="editExpenseAmount" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Monto u Operación Matemáticas</label>
+                <label for="editExpenseAmount" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Monto u Operación Matemática</label>
                 <input type="text" id="editExpenseAmount" inputmode="decimal" class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl p-3 text-lg font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500" placeholder="Ej. 15000 ó 10+5">
                 
                 <div class="mt-2 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
@@ -478,8 +486,11 @@
                     <label for="editExpenseCode" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Moneda</label>
                     <select id="editExpenseCode" class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl p-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-brand-500">
                         <option value="USD">🇺🇸 USD (Dólar)</option>
-                        <option value="CRC">🇨🇷 CRC (Colón)</option>
-                        <option value="CLP">🇨🇱 CLP (Peso)</option>
+                        <option value="CLP">🇨🇱 CLP (Peso Chileno)</option>
+                        <option value="EUR">🇪🇺 EUR (Euro)</option>
+                        <option value="GBP">🇬🇧 GBP (Libra)</option>
+                        <option value="ARS">🇦🇷 ARS (Peso Argentino)</option>
+                        <option value="BRL">🇧🇷 BRL (Real)</option>
                     </select>
                 </div>
 
@@ -513,15 +524,50 @@
         </div>
     </div>
 
-    <!-- SCRIPT PRINCIPAL DE LÓGICA -->
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+        <i id="toastIcon" data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+        <span id="toastMessage">Notificación</span>
+    </div>
+
     <script>
-        const STORAGE_KEY = 'globalxchange_saved_expenses_v1';
-        const CACHE_RATES_KEY = 'globalxchange_cached_rates_v1';
+        const CACHE_RATES_KEY = 'globalxchange_rates_v3';
+        const STORAGE_KEY = 'globalxchange_expenses_v3';
+
+        const FALLBACK_RATES_USD = {
+            USD: 1,
+            CLP: 925,
+            EUR: 0.92,
+            GBP: 0.79,
+            ARS: 950,
+            BRL: 5.5,
+            MXN: 19.5,
+            COP: 4000,
+            PEN: 3.75,
+            UYU: 40,
+            CAD: 1.36,
+            AUD: 1.50,
+            JPY: 145,
+            CNY: 7.15,
+            CHF: 0.85
+        };
 
         const CURRENCIES = [
-            { code: 'USD', name: 'Dólar Estadounidense', symbol: '$', flag: '🇺🇸', region: 'Norteamérica' },
-            { code: 'CRC', name: 'Colón Costarricense', symbol: '₡', flag: '🇨🇷', region: 'Centroamérica' },
-            { code: 'CLP', name: 'Peso Chileno', symbol: '$', flag: '🇨🇱', region: 'Sudamérica' }
+            { code: 'USD', name: 'Dólar Estadounidense', symbol: '$', region: 'EE.UU.' },
+            { code: 'CLP', name: 'Peso Chileno', symbol: '$', region: 'Chile' },
+            { code: 'EUR', name: 'Euro', symbol: '€', region: 'Eurozona' },
+            { code: 'GBP', name: 'Libra Esterlina', symbol: '£', region: 'Reino Unido' },
+            { code: 'ARS', name: 'Peso Argentino', symbol: '$', region: 'Argentina' },
+            { code: 'BRL', name: 'Real Brasileño', symbol: 'R$', region: 'Brasil' },
+            { code: 'MXN', name: 'Peso Mexicano', symbol: '$', region: 'México' },
+            { code: 'COP', name: 'Peso Colombiano', symbol: '$', region: 'Colombia' },
+            { code: 'PEN', name: 'Sol Peruano', symbol: 'S/', region: 'Perú' },
+            { code: 'UYU', name: 'Peso Uruguayo', symbol: '$', region: 'Uruguay' },
+            { code: 'CAD', name: 'Dólar Canadiense', symbol: 'CA$', region: 'Canadá' },
+            { code: 'AUD', name: 'Dólar Australiano', symbol: 'A$', region: 'Australia' },
+            { code: 'JPY', name: 'Yen Japonés', symbol: '¥', region: 'Japón' },
+            { code: 'CNY', name: 'Yuan Chino', symbol: '¥', region: 'China' },
+            { code: 'CHF', name: 'Franco Suizo', symbol: 'CHF', region: 'Suiza' }
         ];
 
         const CATEGORIES = [
@@ -534,93 +580,152 @@
             '💡 Otro Gasto'
         ];
 
-        const FALLBACK_RATES_USD = {
-            USD: 1.0,
-            CRC: 520.00,
-            CLP: 935.50
+        const COUNTRY_FLAGS = {
+            USD: 'us', CLP: 'cl', EUR: 'eu', GBP: 'gb', ARS: 'ar',
+            BRL: 'br', MXN: 'mx', COP: 'co', PEN: 'pe', UYU: 'uy',
+            CAD: 'ca', AUD: 'au', JPY: 'jp', CNY: 'cn', CHF: 'ch'
         };
 
-        // Estado global
-        window.state = {
-            rates: { ...FALLBACK_RATES_USD },
+        const state = {
             fromCurrency: 'USD',
             toCurrency: 'CLP',
-            amount: 1000,
-            feePercentage: 2.5,
-            activeModalSelector: null,
+            amount: 100,
+            rates: { ...FALLBACK_RATES_USD },
+            feePercentage: 0,
             savedExpenses: [],
-            selectedCategoryFilter: 'Todas'
+            selectedCategoryFilter: 'Todas',
+            activeModalSelector: 'from'
         };
 
-        const state = window.state;
+        function getFlagImg(code, className = "w-5 h-3.5 rounded object-cover") {
+            const country = COUNTRY_FLAGS[code] || 'un';
+            return `<img src="https://flagcdn.com/w40/${country}.png" srcset="https://flagcdn.com/w80/${country}.png 2x" class="${className}" alt="${code}">`;
+        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadSavedExpensesFromLocal();
-            initLucideIcons();
-            fetchLiveExchangeRates();
-            setupEventListeners();
-            renderCategoryFilters();
-            updateUI();
-        });
+        function formatNumber(num, decimals = 2) {
+            if (isNaN(num) || num === null || num === undefined) return '0';
+            return new Intl.NumberFormat('es-CL', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        function initLucideIcons() {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
+        }
+
+        function showToastNotification(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = message;
+            
+            if (type === 'success') {
+                toast.className = 'fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold transition-all duration-300 transform translate-y-0 opacity-100 bg-emerald-600 text-white border-emerald-500';
+            } else if (type === 'warning') {
+                toast.className = 'fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold transition-all duration-300 transform translate-y-0 opacity-100 bg-amber-500 text-white border-amber-400';
+            } else {
+                toast.className = 'fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold transition-all duration-300 transform translate-y-0 opacity-100 bg-brand-600 text-white border-brand-500';
+            }
+
+            setTimeout(() => {
+                toast.className = 'fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none';
+            }, 3000);
+        }
 
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('globalxchange_theme', isDark ? 'dark' : 'light');
-            showToastNotification(`Modo ${isDark ? 'oscuro' : 'claro'} activado`, 'success');
         }
 
-        function initLucideIcons() {
-            if (window.lucide) {
-                lucide.createIcons();
-            }
+        function clearInput(inputId = 'amountInput') {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            input.value = '';
+            input.focus();
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        function backspaceInput(inputId = 'amountInput') {
+            const input = document.getElementById(inputId);
+            if (!input || !input.value) return;
+            input.value = input.value.slice(0, -1);
+            input.focus();
+            input.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
         function appendMathOperator(op, inputId = 'amountInput') {
             const input = document.getElementById(inputId);
             if (!input) return;
-
-            let val = input.value.trim();
-            if (!val && (op === '*' || op === '/')) val = '0';
-
-            if (/[\+\-\*\/]\s*$/.test(val)) {
-                input.value = val.replace(/[\+\-\*\/]\s*$/, ` ${op} `);
-            } else {
-                input.value = val ? `${val} ${op} ` : `${op} `;
-            }
-
+            input.value = input.value + ' ' + op + ' ';
             input.focus();
             input.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
-        function toggleKeyboardInputMode(inputId) {
+        function toggleKeyboardInputMode(inputId = 'amountInput') {
             const input = document.getElementById(inputId);
             const label = document.getElementById('keyboardModeLabel');
             if (!input) return;
 
-            const currentMode = input.getAttribute('inputmode');
-            if (currentMode === 'decimal') {
+            if (input.getAttribute('inputmode') === 'decimal') {
                 input.setAttribute('inputmode', 'text');
-                if (label) label.textContent = 'Modo Numérico';
-                showToastNotification('Teclado completo activado', 'success');
+                if (label) label.textContent = 'Teclado Numérico';
+                showToastNotification('Teclado completo activado (Símbolos permitidos)', 'info');
             } else {
                 input.setAttribute('inputmode', 'decimal');
                 if (label) label.textContent = 'Teclado Completo';
-                showToastNotification('Teclado numérico decimal activado', 'success');
+                showToastNotification('Teclado numérico activado', 'info');
             }
-            input.focus();
+        }
+
+        // Sanitizador de entrada: Impide escribir texto arbitrario no numérico ni matemático
+        function sanitizeAmountInput(e) {
+            const input = e.target;
+            // Reemplaza caracteres visuales de multiplicación y división por operadores estándar
+            let clean = input.value.replace(/x|X/g, '*').replace(/÷/g, '/');
+            // Elimina cualquier carácter que NO sea número, +, -, *, /, ., ,, (, ), o espacio
+            clean = clean.replace(/[^0-9+\-*/.,()\s]/g, '');
+            if (input.value !== clean) {
+                input.value = clean;
+            }
         }
 
         function evaluateMathExpression(exprStr) {
             if (exprStr === null || exprStr === undefined) return 0;
-            const str = String(exprStr).trim().replace(/,/g, '.');
+            const str = String(exprStr).trim();
             if (!str) return 0;
 
-            if (!isNaN(Number(str))) return parseFloat(str);
+            let normalized = str.replace(/([0-9\.,]+)/g, (match) => {
+                let val = match;
+                if (val.includes('.') && val.includes(',')) {
+                    if (val.indexOf('.') < val.indexOf(',')) {
+                        val = val.replace(/\./g, '').replace(',', '.');
+                    } else {
+                        val = val.replace(/,/g, '');
+                    }
+                } else if (val.includes(',')) {
+                    if (/^\d{1,3}(,\d{3})+$/.test(val)) {
+                        val = val.replace(/,/g, '');
+                    } else {
+                        val = val.replace(',', '.');
+                    }
+                } else if (val.includes('.')) {
+                    if (/^\d{1,3}(\.\d{3})+$/.test(val)) {
+                        val = val.replace(/\./g, '');
+                    }
+                }
+                return val;
+            });
 
-            if (!/^[0-9+\-*/.()\s]+$/.test(str)) return NaN;
+            if (!isNaN(Number(normalized))) return parseFloat(normalized);
+
+            if (!/^[0-9+\-*/.()\s]+$/.test(normalized)) return NaN;
 
             try {
-                const fn = new Function(`'use strict'; return (${str});`);
+                const fn = new Function(`'use strict'; return (${normalized});`);
                 const val = fn();
                 return (typeof val === 'number' && !isNaN(val) && isFinite(val)) ? val : NaN;
             } catch (e) {
@@ -628,7 +733,6 @@
             }
         }
 
-        // CONSULTA DE TASAS CON BANCO CENTRAL DE CHILE Y OPEN ER API
         async function fetchLiveExchangeRates() {
             const statusBadge = document.getElementById('statusBadge');
             const statusText = document.getElementById('statusText');
@@ -636,72 +740,87 @@
             const offlineBanner = document.getElementById('offlineBanner');
             const offlineBannerText = document.getElementById('offlineBannerText');
 
+            let ratesLoaded = false;
+            let fetchedRates = {};
+
             try {
-                // 1. Consultar API internacional para obtener todas las monedas (CRC, EUR, etc.)[cite: 1]
-                const responseGlobal = await fetch('https://open.er-api.com/v6/latest/USD'); //[cite: 1]
-                let globalRates = {};
-                if (responseGlobal.ok) {
-                    const dataGlobal = await responseGlobal.json();
-                    if (dataGlobal && dataGlobal.rates) {
-                        globalRates = dataGlobal.rates;
+                const resGlobal = await fetch('https://open.er-api.com/v6/latest/USD');
+                if (resGlobal.ok) {
+                    const data = await resGlobal.json();
+                    if (data && data.rates) {
+                        fetchedRates = { ...fetchedRates, ...data.rates };
+                        ratesLoaded = true;
                     }
                 }
+            } catch (e) {
+                console.warn('Fallback: Open ER API no disponible');
+            }
 
-                // 2. Consultar Banco Central de Chile (mindicador.cl) para obtener el CLP oficial[cite: 1]
-                const responseBCCh = await fetch('https://mindicador.cl/api/dolar'); //[cite: 1]
-                let valorDolarOficial = null;
-                if (responseBCCh.ok) {
-                    const dataBCCh = await responseBCCh.json();
+            if (!ratesLoaded) {
+                try {
+                    const resAlt = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                    if (resAlt.ok) {
+                        const dataAlt = await resAlt.json();
+                        if (dataAlt && dataAlt.rates) {
+                            fetchedRates = { ...fetchedRates, ...dataAlt.rates };
+                            ratesLoaded = true;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Fallback: ExchangeRate-API secundario no disponible');
+                }
+            }
+
+            try {
+                const resBCCh = await fetch('https://mindicador.cl/api/dolar');
+                if (resBCCh.ok) {
+                    const dataBCCh = await resBCCh.json();
                     if (dataBCCh && dataBCCh.serie && dataBCCh.serie.length > 0) {
-                        valorDolarOficial = dataBCCh.serie[0].valor;
+                        fetchedRates['CLP'] = dataBCCh.serie[0].valor;
                     }
                 }
+            } catch (e) {
+                console.warn('Mindicador no disponible, utilizando tasa por defecto');
+            }
 
-                // 3. Fusionar todas las tasas en el estado global[cite: 1]
+            if (ratesLoaded || Object.keys(fetchedRates).length > 0) {
                 state.rates = {
                     ...FALLBACK_RATES_USD,
-                    ...globalRates,
-                    ...(valorDolarOficial ? { CLP: valorDolarOficial } : {})
-                }; //[cite: 1]
+                    ...fetchedRates
+                };
 
-                // Guardar en almacenamiento local[cite: 1]
-                const nowFormatted = new Date().toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); //[cite: 1]
+                const nowFormatted = new Date().toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
                 localStorage.setItem(CACHE_RATES_KEY, JSON.stringify({
                     rates: state.rates,
                     timestamp: Date.now(),
                     formattedDate: nowFormatted
-                })); //[cite: 1]
+                }));
 
-                // Actualizar UI del estado de conexión[cite: 1]
-                if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'; //[cite: 1]
-                if (statusIndicator) statusIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse'; //[cite: 1]
-                if (statusText) statusText.textContent = 'Mercado En Vivo'; //[cite: 1]
+                if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800';
+                if (statusIndicator) statusIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+                if (statusText) statusText.textContent = 'Mercado en vivo';
                 
                 const lastUpdatedEl = document.getElementById('lastUpdatedTime');
-                if (lastUpdatedEl) lastUpdatedEl.textContent = `Hoy, ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`; //[cite: 1]
-                if (offlineBanner) offlineBanner.classList.add('hidden'); //[cite: 1]
+                if (lastUpdatedEl) lastUpdatedEl.textContent = `Hoy, ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+                if (offlineBanner) offlineBanner.classList.add('hidden');
 
                 updateUI();
-
-            } catch (err) {
-                console.warn('Error en la consulta de APIs, intentando cargar tasas desde caché local:', err); //[cite: 1]
-                const cached = localStorage.getItem(CACHE_RATES_KEY); //[cite: 1]
-                
+            } else {
+                const cached = localStorage.getItem(CACHE_RATES_KEY);
                 if (cached) {
                     try {
-                        const parsed = JSON.parse(cached); //[cite: 1]
-                        state.rates = { ...FALLBACK_RATES_USD, ...parsed.rates }; //[cite: 1]
-                        const savedDate = parsed.formattedDate || 'reciente'; //[cite: 1]
+                        const parsed = JSON.parse(cached);
+                        state.rates = { ...FALLBACK_RATES_USD, ...parsed.rates };
+                        const savedDate = parsed.formattedDate || 'reciente';
                         
-                        if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800'; //[cite: 1]
-                        if (statusIndicator) statusIndicator.className = 'w-2 h-2 rounded-full bg-amber-500'; //[cite: 1]
-                        if (statusText) statusText.textContent = 'Modo Offline (Caché Local)'; //[cite: 1]
+                        if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
+                        if (statusIndicator) statusIndicator.className = 'w-2 h-2 rounded-full bg-amber-500';
+                        if (statusText) statusText.textContent = 'Modo Offline (Caché)';
                         if (offlineBanner) {
                             offlineBanner.classList.remove('hidden');
-                            if (offlineBannerText) offlineBannerText.textContent = `Usando tasas guardadas (${savedDate}).`; //[cite: 1]
+                            if (offlineBannerText) offlineBannerText.textContent = `Usando tasas guardadas (${savedDate}).`;
                         }
                     } catch (e) {
-                        console.error('Error al parsear el caché:', e); //[cite: 1]
                         useFallbackRates();
                     }
                 } else {
@@ -716,9 +835,9 @@
             const statusBadge = document.getElementById('statusBadge');
             const statusText = document.getElementById('statusText');
             if (statusBadge) statusBadge.className = 'flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
-            if (statusText) statusText.textContent = 'Modo Respaldo';
+            if (statusText) statusText.textContent = 'Modo Respaldo Estimado';
             const lastUpdatedEl = document.getElementById('lastUpdatedTime');
-            if (lastUpdatedEl) lastUpdatedEl.textContent = 'Tasas Estimadas de Mercado';
+            if (lastUpdatedEl) lastUpdatedEl.textContent = 'Tasas Referenciales';
         }
 
         function setupEventListeners() {
@@ -726,30 +845,75 @@
             const mathPreview = document.getElementById('mathResultPreview');
             const mathValue = document.getElementById('mathResultValue');
 
-            amountInput.addEventListener('input', (e) => {
-                const rawVal = e.target.value;
-                const evaluated = evaluateMathExpression(rawVal);
-                
-                if (!isNaN(evaluated)) {
-                    state.amount = evaluated;
-                    if (rawVal.includes('+') || rawVal.includes('-') || rawVal.includes('*') || rawVal.includes('/')) {
-                        mathPreview.classList.remove('hidden');
-                        mathValue.textContent = formatNumber(evaluated, 2);
-                    } else {
-                        mathPreview.classList.add('hidden');
-                    }
-                } else {
-                    mathPreview.classList.add('hidden');
-                }
-                updateCalculations();
-            });
+            const convertedInput = document.getElementById('convertedResult');
+            const targetMathPreview = document.getElementById('targetMathResultPreview');
+            const targetMathValue = document.getElementById('targetMathResultValue');
 
-            amountInput.addEventListener('blur', () => {
-                if (!isNaN(state.amount) && state.amount >= 0) {
-                    amountInput.value = state.amount;
-                    mathPreview.classList.add('hidden');
-                }
-            });
+            const editAmountInput = document.getElementById('editExpenseAmount');
+
+            if (amountInput) {
+                amountInput.addEventListener('input', (e) => {
+                    sanitizeAmountInput(e);
+                    const rawVal = e.target.value;
+                    if (!rawVal.trim()) {
+                        state.amount = 0;
+                        if (mathPreview) mathPreview.classList.add('hidden');
+                        updateCalculations('from');
+                        return;
+                    }
+                    const evaluated = evaluateMathExpression(rawVal);
+                    
+                    if (!isNaN(evaluated)) {
+                        state.amount = evaluated;
+                        if (rawVal.includes('+') || rawVal.includes('-') || rawVal.includes('*') || rawVal.includes('/') || (rawVal.includes('.') && rawVal.includes(','))) {
+                            if (mathPreview) {
+                                mathPreview.classList.remove('hidden');
+                                mathValue.textContent = formatNumber(evaluated, 2);
+                            }
+                        } else {
+                            if (mathPreview) mathPreview.classList.add('hidden');
+                        }
+                        updateCalculations('from');
+                    } else {
+                        if (mathPreview) mathPreview.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (convertedInput) {
+                convertedInput.addEventListener('input', (e) => {
+                    sanitizeAmountInput(e);
+                    const rawVal = e.target.value;
+                    if (!rawVal.trim()) {
+                        state.amount = 0;
+                        if (targetMathPreview) targetMathPreview.classList.add('hidden');
+                        updateCalculations('to');
+                        return;
+                    }
+                    const evaluated = evaluateMathExpression(rawVal);
+                    if (!isNaN(evaluated)) {
+                        const rate = getExchangeRate(state.fromCurrency, state.toCurrency);
+                        if (rate > 0) {
+                            state.amount = evaluated / rate;
+                        }
+                        if (targetMathPreview && targetMathValue && (rawVal.includes('+') || rawVal.includes('-') || rawVal.includes('*') || rawVal.includes('/'))) {
+                            targetMathPreview.classList.remove('hidden');
+                            targetMathValue.textContent = formatNumber(evaluated, 2);
+                        } else if (targetMathPreview) {
+                            targetMathPreview.classList.add('hidden');
+                        }
+                        updateCalculations('to');
+                    } else if (targetMathPreview) {
+                        targetMathPreview.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (editAmountInput) {
+                editAmountInput.addEventListener('input', (e) => {
+                    sanitizeAmountInput(e);
+                });
+            }
 
             document.getElementById('swapCurrenciesBtn').addEventListener('click', () => {
                 const temp = state.fromCurrency;
@@ -768,7 +932,7 @@
 
             document.getElementById('feePercentage').addEventListener('change', (e) => {
                 state.feePercentage = parseFloat(e.target.value);
-                updateCalculations();
+                updateCalculations('from');
             });
 
             document.getElementById('currencyModal').addEventListener('click', (e) => {
@@ -830,31 +994,47 @@
             const fromObj = CURRENCIES.find(c => c.code === state.fromCurrency) || CURRENCIES[0];
             const toObj = CURRENCIES.find(c => c.code === state.toCurrency) || CURRENCIES[1];
 
-            document.getElementById('fromFlag').textContent = fromObj.flag;
+            document.getElementById('fromFlag').innerHTML = getFlagImg(fromObj.code, "w-6 h-4 rounded object-cover");
             document.getElementById('fromCode').textContent = fromObj.code;
-            document.getElementById('sourceSymbol').textContent = `${fromObj.symbol} ${fromObj.code}`;
+            document.getElementById('sourceSymbol').innerHTML = `<span class="inline-flex items-center gap-1.5">${getFlagImg(fromObj.code, "w-4 h-3 rounded-sm object-cover")} <span>${fromObj.symbol} ${fromObj.code}</span></span>`;
 
-            document.getElementById('toFlag').textContent = toObj.flag;
+            document.getElementById('toFlag').innerHTML = getFlagImg(toObj.code, "w-6 h-4 rounded object-cover");
             document.getElementById('toCode').textContent = toObj.code;
-            document.getElementById('targetSymbol').textContent = `${toObj.symbol} ${toObj.code}`;
+            document.getElementById('targetSymbol').innerHTML = `<span class="inline-flex items-center gap-1.5">${getFlagImg(toObj.code, "w-4 h-3 rounded-sm object-cover")} <span>${toObj.symbol} ${toObj.code}</span></span>`;
 
-            const directRate = getExchangeRate(state.fromCurrency, state.toCurrency);
-            const inverseRate = 1 / directRate;
+            const rate = getExchangeRate(state.fromCurrency, state.toCurrency);
+            const invRate = rate > 0 ? 1 / rate : 0;
 
-            document.getElementById('exchangeRateText').textContent = `1 ${state.fromCurrency} = ${formatNumber(directRate, 4)} ${state.toCurrency}`;
-            document.getElementById('rateInverseText').textContent = `(1 ${state.toCurrency} = ${formatNumber(inverseRate, 4)} ${state.fromCurrency})`;
+            const rateText = document.getElementById('exchangeRateText');
+            if (rateText) {
+                rateText.textContent = `1 ${fromObj.code} = ${formatNumber(rate, 4)} ${toObj.code}`;
+            }
+            const rateInvText = document.getElementById('rateInverseText');
+            if (rateInvText) {
+                rateInvText.textContent = `(1 ${toObj.code} = ${formatNumber(invRate, 4)} ${fromObj.code})`;
+            }
 
-            updateCalculations();
-            renderSavedExpenses();
+            updateCalculations('from');
         }
 
-        function updateCalculations() {
+        function updateCalculations(activeSource = 'from') {
             const rate = getExchangeRate(state.fromCurrency, state.toCurrency);
             const converted = (state.amount || 0) * rate;
             
+            const amountInput = document.getElementById('amountInput');
             const convertedInput = document.getElementById('convertedResult');
-            if (convertedInput) {
-                convertedInput.value = formatNumber(converted, 2);
+
+            if (activeSource === 'from') {
+                if (convertedInput && document.activeElement !== convertedInput) {
+                    convertedInput.value = formatNumber(converted, 2);
+                }
+            } else if (activeSource === 'to') {
+                if (amountInput && document.activeElement !== amountInput) {
+                    amountInput.value = formatNumber(state.amount, 2);
+                }
+            } else {
+                if (convertedInput) convertedInput.value = formatNumber(converted, 2);
+                if (amountInput) amountInput.value = formatNumber(state.amount, 2);
             }
 
             const feePercent = state.feePercentage || 0;
@@ -880,7 +1060,7 @@
             const evalAmount = evaluateMathExpression(rawVal);
 
             if (isNaN(evalAmount) || evalAmount <= 0) {
-                showToastNotification('Por favor ingresa un monto válido mayor a 0.', 'warning');
+                showToastNotification('Ingresa un monto válido mayor a 0.', 'warning');
                 return;
             }
 
@@ -981,7 +1161,7 @@
             state.savedExpenses = [];
             saveExpensesToLocal();
             renderSavedExpenses();
-            showToastNotification('Se han eliminado todos los gastos guardados', 'warning');
+            showToastNotification('Todos los gastos fueron eliminados', 'warning');
         }
 
         function deleteExpense(id) {
@@ -1004,7 +1184,7 @@
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state.savedExpenses));
             } catch (err) {
-                console.error("Error guardando gastos en localStorage:", err);
+                console.error("Error guardando datos localmente:", err);
             }
         }
 
@@ -1042,27 +1222,23 @@
             if (filteredExpenses.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-8 bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 rounded-2xl p-4">
-                        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">No hay gastos registrados en la categoría "${state.selectedCategoryFilter}"</p>
+                        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">No hay gastos registrados en "${state.selectedCategoryFilter}"</p>
                     </div>
                 `;
-                document.getElementById('totalCRC').textContent = '₡ 0';
                 document.getElementById('totalUSD').textContent = '$ 0.00';
                 document.getElementById('totalCLP').textContent = '$ 0';
                 initLucideIcons();
                 return;
             }
 
-            let sumCRC = 0;
             let sumUSD = 0;
             let sumCLP = 0;
 
             container.innerHTML = filteredExpenses.map(item => {
                 const usdVal = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
-                const crcVal = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
                 const clpVal = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
 
                 sumUSD += usdVal;
-                sumCRC += crcVal;
                 sumCLP += clpVal;
 
                 return `
@@ -1077,7 +1253,9 @@
                                 <span class="text-[10px] text-slate-400 dark:text-slate-500">${item.date}</span>
                             </div>
                             <span class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 block mt-0.5 sm:mt-1 truncate">${item.note}</span>
-                            <span class="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 block mt-0.5">Ingresado: <strong class="text-slate-600 dark:text-slate-300">${item.fromSymbol || ''} ${formatNumber(item.fromAmount, 2)} ${item.fromCode}</strong></span>
+                            <span class="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 block mt-0.5 flex items-center gap-1">
+                                Ingresado: ${getFlagImg(item.fromCode, "w-3.5 h-2.5 rounded-sm object-cover")} <strong class="text-slate-600 dark:text-slate-300">${item.fromSymbol || ''} ${formatNumber(item.fromAmount, 2)} ${item.fromCode}</strong>
+                            </span>
                         </div>
                         
                         <div class="flex items-center gap-1 lg:hidden shrink-0">
@@ -1094,17 +1272,17 @@
                     </div>
 
                     <div class="flex items-center justify-between lg:justify-end w-full lg:w-auto gap-2 pt-2.5 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-slate-700">
-                        <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-[10px] sm:text-xs flex-1 lg:flex-initial">
-                            <div class="px-2 sm:px-3 py-1.5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200/60 dark:border-slate-700">
-                                <span class="text-[9px] sm:text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">🇨🇷 CRC</span>
-                                <span class="font-extrabold text-slate-800 dark:text-slate-200">₡ ${formatNumber(crcVal, 0)}</span>
-                            </div>
+                        <div class="grid grid-cols-2 gap-1.5 sm:gap-2 text-center text-[10px] sm:text-xs flex-1 lg:flex-initial">
                             <div class="px-2 sm:px-3 py-1.5 bg-brand-50/50 dark:bg-brand-950/30 rounded-xl border border-brand-100 dark:border-brand-900">
-                                <span class="text-[9px] sm:text-[10px] font-semibold text-brand-500 dark:text-brand-400 block">🇺🇸 USD</span>
+                                <span class="text-[9px] sm:text-[10px] font-semibold text-brand-500 dark:text-brand-400 flex items-center justify-center gap-1">
+                                    ${getFlagImg('USD', 'w-3.5 h-2.5 rounded-sm object-cover')} USD
+                                </span>
                                 <span class="font-extrabold text-brand-600 dark:text-brand-400">$ ${formatNumber(usdVal, 2)}</span>
                             </div>
                             <div class="px-2 sm:px-3 py-1.5 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-xl border border-emerald-100 dark:border-emerald-900">
-                                <span class="text-[9px] sm:text-[10px] font-semibold text-emerald-500 dark:text-emerald-400 block">🇨🇱 CLP</span>
+                                <span class="text-[9px] sm:text-[10px] font-semibold text-emerald-500 dark:text-emerald-400 flex items-center justify-center gap-1">
+                                    ${getFlagImg('CLP', 'w-3.5 h-2.5 rounded-sm object-cover')} CLP
+                                </span>
                                 <span class="font-extrabold text-emerald-600 dark:text-emerald-400">$ ${formatNumber(clpVal, 0)}</span>
                             </div>
                         </div>
@@ -1125,111 +1303,10 @@
             `;
             }).join('');
 
-            document.getElementById('totalCRC').textContent = `₡ ${formatNumber(sumCRC, 0)}`;
             document.getElementById('totalUSD').textContent = `$ ${formatNumber(sumUSD, 2)}`;
             document.getElementById('totalCLP').textContent = `$ ${formatNumber(sumCLP, 0)}`;
 
             initLucideIcons();
-        }
-
-        // FUNCIONALIDAD PARA COMPARTIR GASTOS
-        async function shareSummary() {
-            if (!state.savedExpenses || state.savedExpenses.length === 0) {
-                showToastNotification('No hay gastos registrados para compartir.', 'warning');
-                return;
-            }
-
-            const exportList = state.savedExpenses.filter(item => {
-                if (state.selectedCategoryFilter === 'Todas') return true;
-                return item.category === state.selectedCategoryFilter;
-            });
-
-            if (exportList.length === 0) {
-                showToastNotification('No hay gastos en esta categoría.', 'warning');
-                return;
-            }
-
-            let sumUSD = 0, sumCRC = 0, sumCLP = 0;
-            let itemsText = exportList.map((item, index) => {
-                const usd = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
-                const crc = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
-                const clp = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
-
-                sumUSD += usd;
-                sumCRC += crc;
-                sumCLP += clp;
-
-                return `${index + 1}. ${item.note} (${item.category})\n   👉 Misión: ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode}\n   🇨🇱 $${formatNumber(clp, 0)} CLP | 🇺🇸 $${formatNumber(usd, 2)} USD | 🇨🇷 ₡${formatNumber(crc, 0)} CRC`;
-            }).join('\n\n');
-
-            const textToShare = `📊 *Resumen GlobalXchange - ${state.selectedCategoryFilter}*\n\n` +
-                `${itemsText}\n\n` +
-                `------------------------------------\n` +
-                `💰 *TOTALES ACUMULADOS:*\n` +
-                `🇨🇱 CLP: $${formatNumber(sumCLP, 0)}\n` +
-                `🇺🇸 USD: $${formatNumber(sumUSD, 2)}\n` +
-                `🇨🇷 CRC: ₡${formatNumber(sumCRC, 0)}\n\n` +
-                `📱 *GlobalXchange App*`;
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Resumen de Gastos - GlobalXchange',
-                        text: textToShare
-                    });
-                    showToastNotification('Resumen compartido exitosamente', 'success');
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                        copyToClipboard(textToShare);
-                    }
-                }
-            } else {
-                copyToClipboard(textToShare);
-            }
-        }
-
-        async function shareItem(id) {
-            const item = state.savedExpenses.find(i => String(i.id) === String(id));
-            if (!item) return;
-
-            const usd = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
-            const crc = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
-            const clp = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
-
-            const textToShare = `🧾 *Detalle de Gasto - GlobalXchange*\n\n` +
-                `📌 *Nota:* ${item.note}\n` +
-                `🏷️ *Categoría:* ${item.category}\n` +
-                `📅 *Fecha:* ${item.date}\n` +
-                `💵 *Monto:* ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode}\n\n` +
-                `*Equivalencias:*\n` +
-                `🇨🇱 CLP: $${formatNumber(clp, 0)}\n` +
-                `🇺🇸 USD: $${formatNumber(usd, 2)}\n` +
-                `🇨🇷 CRC: ₡${formatNumber(crc, 0)}\n\n` +
-                `📱 *GlobalXchange App*`;
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: `Gasto: ${item.note}`,
-                        text: textToShare
-                    });
-                    showToastNotification('Gasto compartido con éxito', 'success');
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                        copyToClipboard(textToShare);
-                    }
-                }
-            } else {
-                copyToClipboard(textToShare);
-            }
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToastNotification('Resumen copiado al portapapeles', 'success');
-            }).catch(() => {
-                showToastNotification('No se pudo copiar el resumen', 'warning');
-            });
         }
 
         function openCurrencyModal(targetSelector) {
@@ -1257,27 +1334,6 @@
             document.getElementById('currencySearchInput').value = '';
         }
 
-        function renderCurrencyList(list) {
-            const container = document.getElementById('currencyListContainer');
-            if (list.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-slate-400 py-6">No se encontraron divisas coincidentes.</p>`;
-                return;
-            }
-
-            container.innerHTML = list.map(c => `
-                <div onclick="selectCurrencyFromModal('${c.code}')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition-colors">
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">${c.flag}</span>
-                        <div>
-                            <span class="font-bold text-sm text-slate-900 dark:text-white">${c.code}</span>
-                            <span class="text-xs text-slate-400 dark:text-slate-500 block">${c.name}</span>
-                        </div>
-                    </div>
-                    <span class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400">${c.region}</span>
-                </div>
-            `).join('');
-        }
-
         function filterCurrencyList(e) {
             const query = e.target.value.toLowerCase().trim();
             const filtered = CURRENCIES.filter(c => 
@@ -1288,21 +1344,65 @@
             renderCurrencyList(filtered);
         }
 
-        function selectCurrencyFromModal(code) {
+        function renderCurrencyList(list) {
+            const container = document.getElementById('currencyListContainer');
+            if (!container) return;
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="p-4 text-center text-xs text-slate-400 dark:text-slate-500">
+                        No se encontraron divisas coincidentes
+                    </div>
+                `;
+                return;
+            }
+
+            const currentSelected = state.activeModalSelector === 'from' ? state.fromCurrency : state.toCurrency;
+
+            container.innerHTML = list.map(c => {
+                const isSelected = c.code === currentSelected;
+                return `
+                <button type="button" onclick="selectCurrency('${c.code}')" class="w-full flex items-center justify-between p-3 rounded-2xl transition-all text-left group ${
+                    isSelected 
+                        ? 'bg-brand-50 dark:bg-brand-950/60 border border-brand-300 dark:border-brand-700' 
+                        : 'hover:bg-slate-100 dark:hover:bg-slate-700/60 border border-transparent'
+                }">
+                    <div class="flex items-center gap-3">
+                        <span class="p-1 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-700 shrink-0 flex items-center justify-center">
+                            ${getFlagImg(c.code, "w-7 h-5 rounded object-cover")}
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">${c.code}</span>
+                                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500">(${c.symbol})</span>
+                            </div>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">${c.name}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${isSelected ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-600 text-white">Seleccionada</span>' : ''}
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
+                            ${c.region}
+                        </span>
+                    </div>
+                </button>
+            `;
+            }).join('');
+        }
+
+        function selectCurrency(code) {
             if (state.activeModalSelector === 'from') {
-                if (code === state.toCurrency) state.toCurrency = state.fromCurrency;
                 state.fromCurrency = code;
-            } else {
-                if (code === state.fromCurrency) state.fromCurrency = state.toCurrency;
+            } else if (state.activeModalSelector === 'to') {
                 state.toCurrency = code;
             }
             closeCurrencyModal();
             updateUI();
         }
 
-        function exportExpensesCSV() {
+        async function shareSummary() {
             if (!state.savedExpenses || state.savedExpenses.length === 0) {
-                showToastNotification('No hay gastos registrados para exportar.', 'warning');
+                showToastNotification('No hay gastos para compartir.', 'warning');
                 return;
             }
 
@@ -1311,178 +1411,186 @@
                 return item.category === state.selectedCategoryFilter;
             });
 
-            const headers = ['Categoría', 'Nota', 'Monto Original', 'Moneda Original', 'Monto CRC (Colón)', 'Monto USD (Dólar)', 'Monto CLP (Peso)', 'Fecha y Hora'];
-            const rows = exportList.map(item => {
-                const usdVal = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
-                const crcVal = item.fromAmount * getExchangeRate(item.fromCode, 'CRC');
-                const clpVal = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
+            if (exportList.length === 0) {
+                showToastNotification('No hay gastos en esta categoría.', 'warning');
+                return;
+            }
+
+            let sumUSD = 0, sumCLP = 0;
+            let itemsText = exportList.map((item, index) => {
+                const usd = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
+                const clp = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
+
+                sumUSD += usd;
+                sumCLP += clp;
+
+                return `${index + 1}. ${item.note} (${item.category})\n   👉 Monto: ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode}\n   🇨🇱 $${formatNumber(clp, 0)} CLP | 🇺🇸 $${formatNumber(usd, 2)} USD`;
+            }).join('\n\n');
+
+            const textToShare = `📊 *Resumen GlobalXchange - ${state.selectedCategoryFilter}*\n\n` +
+                `${itemsText}\n\n` +
+                `------------------------------------\n` +
+                `💰 *TOTALES ACUMULADOS:*\n` +
+                `🇨🇱 CLP: $${formatNumber(sumCLP, 0)}\n` +
+                `🇺🇸 USD: $${formatNumber(sumUSD, 2)}\n\n` +
+                `📱 *GlobalXchange App*`;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Resumen de Gastos - GlobalXchange',
+                        text: textToShare
+                    });
+                    showToastNotification('Resumen compartido exitosamente', 'success');
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        copyToClipboard(textToShare);
+                    }
+                }
+            } else {
+                copyToClipboard(textToShare);
+            }
+        }
+
+        async function shareItem(id) {
+            const item = state.savedExpenses.find(i => String(i.id) === String(id));
+            if (!item) return;
+
+            const usd = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
+            const clp = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
+
+            const textToShare = `🧾 *Detalle de Gasto - GlobalXchange*\n\n` +
+                `📌 *Nota:* ${item.note}\n` +
+                `🏷️ *Categoría:* ${item.category}\n` +
+                `📅 *Fecha:* ${item.date}\n` +
+                `💵 *Monto:* ${item.fromSymbol || ''}${formatNumber(item.fromAmount, 2)} ${item.fromCode}\n\n` +
+                `*Equivalencias:*\n` +
+                `🇨🇱 CLP: $${formatNumber(clp, 0)}\n` +
+                `🇺🇸 USD: $${formatNumber(usd, 2)}\n\n` +
+                `📱 *GlobalXchange App*`;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: `Gasto: ${item.note}`,
+                        text: textToShare
+                    });
+                    showToastNotification('Gasto compartido con éxito', 'success');
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        copyToClipboard(textToShare);
+                    }
+                }
+            } else {
+                copyToClipboard(textToShare);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToastNotification('Resumen copiado al portapapeles', 'success');
+            }).catch(() => {
+                showToastNotification('No se pudo copiar el resumen', 'warning');
+            });
+        }
+
+        function exportExpensesCSV() {
+            if (!state.savedExpenses || state.savedExpenses.length === 0) {
+                showToastNotification('No hay registros para exportar.', 'warning');
+                return;
+            }
+
+            const headers = ['ID', 'Fecha', 'Categoria', 'Nota', 'Monto_Origen', 'Moneda_Origen', 'CLP', 'USD'];
+            const rows = state.savedExpenses.map(item => {
+                const usd = item.fromAmount * getExchangeRate(item.fromCode, 'USD');
+                const clp = item.fromAmount * getExchangeRate(item.fromCode, 'CLP');
 
                 return [
-                    `"${(item.category || '').replace(/"/g, '""')}"`,
+                    item.id,
+                    `"${item.date}"`,
+                    `"${item.category}"`,
                     `"${(item.note || '').replace(/"/g, '""')}"`,
                     item.fromAmount,
                     item.fromCode,
-                    crcVal.toFixed(0),
-                    usdVal.toFixed(2),
-                    clpVal.toFixed(0),
-                    `"${item.date}"`
-                ];
+                    clp.toFixed(2),
+                    usd.toFixed(2)
+                ].join(',');
             });
 
-            const csvContent = "\uFEFF" + [headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
+            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows].join('\n');
+            const encodedUri = encodeURI(csvContent);
             const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `resumen_gastos_${state.selectedCategoryFilter.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.csv`);
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', `GlobalXchange_Gastos_${new Date().toISOString().slice(0, 10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
-            showToastNotification('Resumen exportado exitosamente en CSV', 'success');
+            showToastNotification('Archivo CSV exportado', 'success');
         }
 
         function triggerImportCSV() {
             const input = document.getElementById('importCsvInput');
-            if (input) {
-                input.value = '';
-                input.click();
-            }
+            if (input) input.click();
         }
 
-        function handleImportCSV(event) {
-            const file = event.target.files[0];
+        function handleImportCSV(e) {
+            const file = e.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function(evt) {
                 try {
-                    const text = e.target.result;
-                    parseAndLoadCSV(text);
+                    const text = evt.target.result;
+                    const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+                    if (lines.length <= 1) return;
+
+                    let importedCount = 0;
+                    for (let i = 1; i < lines.length; i++) {
+                        const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+                        if (cols.length >= 6) {
+                            const dateStr = cols[1];
+                            const catStr = cols[2];
+                            const noteStr = cols[3];
+                            const amt = parseFloat(cols[4]);
+                            const code = cols[5];
+
+                            if (!isNaN(amt) && amt > 0) {
+                                const fromObj = CURRENCIES.find(c => c.code === code) || CURRENCIES[0];
+                                state.savedExpenses.push({
+                                    id: Date.now() + i,
+                                    timestamp: Date.now(),
+                                    category: catStr || '💡 Otro Gasto',
+                                    note: noteStr || 'Gasto importado',
+                                    fromAmount: amt,
+                                    fromCode: code || 'USD',
+                                    fromSymbol: fromObj.symbol,
+                                    date: dateStr || new Date().toLocaleDateString()
+                                });
+                                importedCount++;
+                            }
+                        }
+                    }
+
+                    saveExpensesToLocal();
+                    renderSavedExpenses();
+                    showToastNotification(`Se importaron ${importedCount} registros`, 'success');
                 } catch (err) {
-                    console.error("Error al procesar el archivo CSV:", err);
-                    showToastNotification('Error al leer el archivo CSV.', 'warning');
+                    showToastNotification('Error al leer el archivo CSV', 'warning');
                 }
             };
-            reader.readAsText(file, 'UTF-8');
+            reader.readAsText(file);
+            e.target.value = '';
         }
 
-        function parseAndLoadCSV(csvText) {
-            const lines = csvText.split(/\r\n|\n/).filter(line => line.trim() !== '');
-            if (lines.length <= 1) {
-                showToastNotification('El archivo CSV está vacío.', 'warning');
-                return;
-            }
-
-            let importedCount = 0;
-            const delimiter = lines[0].includes(';') ? ';' : ',';
-
-            for (let i = 1; i < lines.length; i++) {
-                const cols = parseCSVLine(lines[i], delimiter);
-
-                if (cols.length >= 4) {
-                    const category = unquote(cols[0]) || '💡 Otro Gasto';
-                    const note = unquote(cols[1]) || category;
-                    const amount = parseFloat(cols[2]);
-                    const code = unquote(cols[3]).toUpperCase();
-                    const date = cols[7] ? unquote(cols[7]) : new Date().toLocaleDateString('es-ES');
-
-                    if (!isNaN(amount) && amount > 0) {
-                        const fromObj = CURRENCIES.find(c => c.code === code) || CURRENCIES[0];
-                        
-                        state.savedExpenses.unshift({
-                            id: Date.now() + i,
-                            timestamp: Date.now() + i,
-                            category: category,
-                            note: note,
-                            fromAmount: amount,
-                            fromCode: code,
-                            fromSymbol: fromObj.symbol,
-                            date: date
-                        });
-                        importedCount++;
-                    }
-                }
-            }
-
-            saveExpensesToLocal();
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedExpensesFromLocal();
+            setupEventListeners();
+            renderCategoryFilters();
             renderSavedExpenses();
-
-            if (importedCount > 0) {
-                showToastNotification(`¡Se importaron ${importedCount} gastos exitosamente!`, 'success');
-            } else {
-                showToastNotification('No se encontraron registros válidos.', 'warning');
-            }
-        }
-
-        function parseCSVLine(text, delimiter) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-
-            for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                if (char === '"') {
-                    if (inQuotes && text[i + 1] === '"') {
-                        current += '"';
-                        i++;
-                    } else {
-                        inQuotes = !inQuotes;
-                    }
-                } else if (char === delimiter && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            result.push(current.trim());
-            return result;
-        }
-
-        function unquote(str) {
-            if (!str) return '';
-            let res = str.trim();
-            if (res.startsWith('"') && res.endsWith('"')) {
-                res = res.substring(1, res.length - 1).replace(/""/g, '"');
-            }
-            return res;
-        }
-
-        function showToastNotification(message, type = 'success') {
-            let toast = document.getElementById('toastNotification');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toastNotification';
-                document.body.appendChild(toast);
-            }
-
-            const isWarning = type === 'warning';
-            toast.className = `fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl shadow-xl border text-xs font-bold transition-all duration-300 transform flex items-center gap-2 ${
-                isWarning 
-                    ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800' 
-                    : 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-            }`;
-
-            toast.innerHTML = `<i data-lucide="${isWarning ? 'alert-circle' : 'check-circle'}" class="w-4 h-4"></i> <span>${message}</span>`;
+            updateUI();
+            fetchLiveExchangeRates();
             initLucideIcons();
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-10', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-10', 'opacity-0');
-            }, 3200);
-        }
-
-        function formatNumber(num, decimals = 2) {
-            if (isNaN(num)) return '0.00';
-            return new Intl.NumberFormat('es-ES', {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals
-            }).format(num);
-        }
+        });
     </script>
 </body>
 </html>
